@@ -1,10 +1,12 @@
 import { useFonts } from 'expo-font';
 import { Slot, SplashScreen, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
-import { TamaguiProvider } from 'tamagui';
+import { TamaguiProvider, Theme } from 'tamagui';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import config from '../tamagui.config';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from 'queryClient';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,7 +29,11 @@ export default function Layout() {
   return (
     <TamaguiProvider config={config}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Slot />
+        <QueryClientProvider client={queryClient}>
+          <Theme name="blue">
+            <Slot />
+          </Theme>
+        </QueryClientProvider>
       </GestureHandlerRootView>
     </TamaguiProvider>
   );
